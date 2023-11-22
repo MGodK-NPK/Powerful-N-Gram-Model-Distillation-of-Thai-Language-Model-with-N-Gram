@@ -54,26 +54,27 @@ class Perplexity:
             if end_loc == self.seq_len:
                 break
 
-        self.ppl = torch.exp(torch.stack(nlls).mean())
+        ppl = torch.exp(torch.stack(nlls).mean())
 
-        return self.ppl
+        return ppl
 
-    # def cal_perplexity(self):
-    #     """
-    #     Calculate model's perplexity
-    #     """
+    def cal_perplexity_2(self):
+        """
+        Calculate model's perplexity
+        """
 
-    #     self.inputs = self.tokenizer(self.data, return_tensors = "pt")
-    #     self.loss = self.model(input_ids = self.inputs["input_ids"], labels = self.inputs["input_ids"]).loss
-    #     self.ppl = torch.exp(self.loss)
+        self.inputs = self.tokenizer(self.data, return_tensors = "pt")
+        loss = self.model(input_ids = self.inputs["input_ids"], labels = self.inputs["input_ids"]).loss
+        ppl = torch.exp(loss)
 
-    #     return self.ppl
+        return ppl
 
 if __name__ == "__main__":
 
     stride = 512
 
-    model = 'gpt2'
+    model = 'flax-community/gpt2-base-thai'
+
     text = 'ยิ่งโตขึ้นเรายิ่งใช้บทเพลง "ฉันมายินดีให้กับรักที่สดใส~" บ่อยขึ้นตามไปด้วย เพราะคนดังที่เราชอบกำลังทยอยเป็นฝั่งเป็นฝาไปตาม ๆ กัน \
             ซึ่งตอนนี้ก็ถึงคิวของพ่อหนุ่ม เพอร์ซีย์ แจ็กสัน ของเราอย่าง Logan Lerman แล้วค่ะ \
             เมื่อล่าสุด Ana Corrigan แฟนสาวของเขาได้ออกมาประกาศผ่านอินสตาแกรมว่าทั้งคู่หมั้นหมายกันเป็นที่เรียบร้อยแล้ว พร้อมแคปชั่นว่า \
@@ -82,6 +83,6 @@ if __name__ == "__main__":
             จนมาถึงตอนนี้ทั้งสองตัดสินใจแต่งงานกันเป็นที่เรียบร้อยแล้ว ขอแสดงความยินดีด้วยน้าา' 
     
     Calculate_Test = Perplexity(model,text)
-    perplexity = Calculate_Test.cal_perplexity(stride= stride)
+    perplexity = Calculate_Test.cal_perplexity(512)
     
     print(f"Perplexity of {model} model is {perplexity}")
