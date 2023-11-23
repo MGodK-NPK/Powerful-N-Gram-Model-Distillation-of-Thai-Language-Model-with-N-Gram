@@ -6,7 +6,7 @@ from transformers import AutoTokenizer
 tokenizer = AutoTokenizer.from_pretrained("openthaigpt/openthaigpt-1.0.0-beta-7b-chat-ckpt-hf", use_fast=False)
 
 # Define the directory path
-directory_path = "/Users/natanan/Documents/GitHub/Powerful-N-Gram-Model-Distillation-of-Thai-Language-Model-with-N-Gram/Datasets/documents-nsc"
+directory_path = "Powerful-N-Gram-Model-Distillation-of-Thai-Language-Model-with-N-Gram/Datasets/documents-nsc"
 
 # Function to extract [str_content] from a random subset of shuffled files and record file names
 def extract_str_content_random_and_record_filenames(directory, used_files):
@@ -47,23 +47,23 @@ def extract_str_content_random_and_record_filenames(directory, used_files):
             # Iterate through each content and count tokens
             for content in str_contents:
                 token_count = len(tokenizer.tokenize(content))
-                if total_token + token_count < 10000:
+                if total_token + token_count < 200000:
                     total_token += token_count
                     combined_str_content += content + '\n\n'  # Add a newline for separation
                     used_file_names.append(filename)  # Record the used file name
                 else:
                     break  # Stop adding content if the token count exceeds 10000
 
-        if total_token >= 10000:
+        if total_token >= 200000:
             break  # Stop iterating through files if the token count exceeds 10000
 
     # Write the combined [str_content] to a new file
-    output_file_path = os.path.join("/Users/natanan/Documents/GitHub/Powerful-N-Gram-Model-Distillation-of-Thai-Language-Model-with-N-Gram/Datasets/Test set", "extracted_str_content.txt")
+    output_file_path = os.path.join("Powerful-N-Gram-Model-Distillation-of-Thai-Language-Model-with-N-Gram/Datasets/Test set", "extracted_str_content.txt")
     with open(output_file_path, 'w', encoding='utf-8') as output_file:
         output_file.write(combined_str_content)
 
     # Write the used file names to a separate file
-    used_files_path = os.path.join("/Users/natanan/Documents/GitHub/Powerful-N-Gram-Model-Distillation-of-Thai-Language-Model-with-N-Gram/Datasets/Test set", "used_files_for_test.txt")
+    used_files_path = os.path.join("Powerful-N-Gram-Model-Distillation-of-Thai-Language-Model-with-N-Gram/Datasets/Test set", "used_files_for_test.txt")
     with open(used_files_path, 'w', encoding='utf-8') as used_files:
         for file_name in used_file_names:
             used_files.write(file_name + '\n')
@@ -72,7 +72,7 @@ def extract_str_content_random_and_record_filenames(directory, used_files):
     print("Used file names written to", used_files_path)
 
 # Used files list
-used_files_path = "/Users/natanan/Documents/GitHub/Powerful-N-Gram-Model-Distillation-of-Thai-Language-Model-with-N-Gram/Datasets/Training for N-gram/used_files.txt"
+used_files_path = "Powerful-N-Gram-Model-Distillation-of-Thai-Language-Model-with-N-Gram/Datasets/Training for N-gram/used_files.txt"
 with open(used_files_path) as f:
     used_files = {name.strip() for name in f}
 

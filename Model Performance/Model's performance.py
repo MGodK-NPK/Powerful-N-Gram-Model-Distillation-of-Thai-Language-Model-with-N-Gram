@@ -9,7 +9,8 @@ with open(path_text, 'r') as file:
 
 
 # Perplexity = Perplexity(model= model, data= test_data).cal_perplexity(512)
-print(f"Perplexity of {models[2]} model is {Perplexity(model= models[2], data= test_data).cal_perplexity(512)}")
+print(f"Perplexity of {models[0]} model is {Perplexity(model= models[0], data= test_data).cal_perplexity(512)}")
 
 ### OUTPUT gpt2 model: 5.07
 ### OUTPUT pgt2-base-thai model: 26.066
+### OUTPUT n-gram model: 2.598
